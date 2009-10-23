@@ -1,20 +1,28 @@
+gem "dm-core", "0.9.11"
+
+require 'dm-core'
+require 'dm-aggregates'
+require 'dm-types'
+require 'dm-datastore-adapter/datastore-adapter'
+
+DataMapper.setup(:datastore,
+                 :adapter => :datastore,
+                 :database => 'posts')
+
 require File.dirname(__FILE__) + '/../vendor/maruku/maruku'
 
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/../vendor/syntax'
 require 'syntax/convertors/html'
 
-class Post < Sequel::Model
-	unless table_exists?
-		set_schema do
-			primary_key :id
-			text :title
-			text :body
-			text :slug
-			text :tags
-			timestamp :created_at
-		end
-		create_table
-	end
+class Post
+  include DataMapper::Resource
+  def self.default_repository_name; :datastore end
+  property :id,         Serial
+  property :title,      Text,     :lazy => false
+  property :body,       Text,     :lazy => false
+  property :slug,       Text,     :lazy => false
+  property :tags,       Text,     :lazy => false
+  property :created_at, DateTime
 
 	def url
 		d = created_at
