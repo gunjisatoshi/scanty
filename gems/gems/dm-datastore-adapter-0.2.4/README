@@ -1,0 +1,30 @@
+dm-datastore-adapter
+=======
+
+  This is a DataMapper adapter to DataStore of Google App Engine.
+
+Requirement
+===========
+
+  This adapter is designed to be used with JRuby.
+
+Setup
+=====
+
+  First of all, you must install Google AppEngine SDK and configure its
+  environment.  After that, you can install this adapter by gem command like
+  this.
+
+    sudo gem install dm-datastore-adapter
+
+Setting up
+----------
+
+  In your config/database.yml,
+
+    production:
+      :adapter: datastore
+      :host:    localhost
+
+  You shouldn't use this adapter for environments other than production
+  environment.
